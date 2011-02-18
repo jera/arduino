@@ -8,8 +8,8 @@
 #define SENSOR_ESQUERDA 1
 #define SENSOR_DIREITA 3
 
-int SEM_LUZ_FRENTE = 50;
-int SEM_LUZ_OUTROS = 300;
+const int SEM_LUZ_FRENTE = 50;
+const int SEM_LUZ_OUTROS = 300;
 
 void setup(){
   Serial.begin(9600);
@@ -75,13 +75,6 @@ void virarDireita(int tempo)
   virar(MOTOR_DC_ESQUERDA,500);
 }
 
-void virar(int motor, int tempo)
-{
-  analogWrite(motor,200);
-  delay(tempo);
-  parar(motor);
-}  
-
 void andarFrente(int tempo) 
 { 
   parar(MOTOR_DC_TRAZ);
@@ -97,6 +90,13 @@ void andarTraz(int tempo)
   parar(MOTOR_DC_DIREITA);
   acelerar(MOTOR_DC_TRAZ,tempo);
 }
+
+void virar(int motor, int tempo)
+{
+  analogWrite(motor,200);
+  delay(tempo);
+  parar(motor);
+}  
 
 void pararTodosMotores()
 {
