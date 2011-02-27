@@ -1,15 +1,15 @@
 #define MOTOR_DC_FRENTE 5
-#define MOTOR_DC_TRAZ 6
+#define MOTOR_DC_TRAS 6
 #define MOTOR_DC_ESQUERDA 10
 #define MOTOR_DC_DIREITA 11
 
 #define SENSOR_FRENTE 0
-#define SENSOR_TRAZ 2
+#define SENSOR_TRAS 2
 #define SENSOR_ESQUERDA 1
 #define SENSOR_DIREITA 3
 
-const int SEM_LUZ_FRENTE = 50;
-const int SEM_LUZ_OUTROS = 300;
+int SEM_LUZ_FRENTE = 50;
+int SEM_LUZ_OUTROS = 300;
 
 void setup(){
   Serial.begin(9600);
@@ -20,30 +20,20 @@ void loop()
   andar();
 }
 
-
 void andar()
 {
  int intensidadeFrente = analogRead(SENSOR_FRENTE);
- int intensidadeTraz = analogRead(SENSOR_TRAZ);
+ int intensidadeTRAS = analogRead(SENSOR_TRAS);
  int intensidadeEsquerda = analogRead(SENSOR_ESQUERDA);
  int intensidadeDireita = analogRead(SENSOR_DIREITA);;
- 
- Serial.println("");
- Serial.println("Luzes");
- Serial.println(intensidadeFrente);
- Serial.println(intensidadeTraz);
- Serial.println(intensidadeEsquerda);
- Serial.println(intensidadeDireita);
- 
-// delay(2000);
  
  if (intensidadeFrente < SEM_LUZ_FRENTE)
  {
    andarFrente(1000);
  }
- else if (intensidadeTraz < SEM_LUZ_OUTROS)
+ else if (intensidadeTRAS < SEM_LUZ_OUTROS)
  {
-   andarTraz(1000);
+   andarTRAS(1000);
  }
  else if (intensidadeEsquerda < SEM_LUZ_OUTROS)
  {
@@ -54,7 +44,6 @@ void andar()
    virarDireita(1000);
  }
  else {
-  Serial.println("Motores parados");
   pararTodosMotores();
  }
 }
@@ -77,18 +66,14 @@ void virarDireita(int tempo)
 
 void andarFrente(int tempo) 
 { 
-  parar(MOTOR_DC_TRAZ);
-  parar(MOTOR_DC_ESQUERDA);
-  parar(MOTOR_DC_DIREITA);
+  parar(MOTOR_DC_TRAS);
   acelerar(MOTOR_DC_FRENTE,tempo);
 }
 
-void andarTraz(int tempo) 
+void andarTRAS(int tempo) 
 { 
   parar(MOTOR_DC_FRENTE);
-  parar(MOTOR_DC_ESQUERDA);
-  parar(MOTOR_DC_DIREITA);
-  acelerar(MOTOR_DC_TRAZ,tempo);
+  acelerar(MOTOR_DC_TRAS,tempo);
 }
 
 void virar(int motor, int tempo)
@@ -101,7 +86,7 @@ void virar(int motor, int tempo)
 void pararTodosMotores()
 {
   parar(MOTOR_DC_FRENTE);
-  parar(MOTOR_DC_TRAZ);
+  parar(MOTOR_DC_TRAS);
   parar(MOTOR_DC_ESQUERDA);
   parar(MOTOR_DC_DIREITA);
 }
